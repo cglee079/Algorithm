@@ -1,4 +1,4 @@
-# Alogorithm
+# Algorithm
 
 Just Code, No Including Explanation
 
