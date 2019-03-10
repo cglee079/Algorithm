@@ -1,81 +1,54 @@
 package com.study.sort.merge;
 
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class Main {
-	private int list[];
-	private int sorted[];
+	int arr[] = { 10, 8, 1, 7, 3, 2, 15, 9, 5 };
 
-	public void merge(int left, int right) {
-		int i, m, j, r, k;
-		i = left;
-		m = (left + right) / 2;
-		r = right;
-		j = m + 1;
-		k = left;
+	public void sort(int s, int mid, int e) {
+		int k = s;
+		int i = s;
+		int j = mid + 1;
+		int[] temp = new int[arr.length];
 
-		while (i <= m && j <= r) {
-			if (list[i] > list[j]) {
-				sorted[k++] = list[i++];
+		while (i <= mid && j <= e) {
+			if (arr[i] < arr[j]) {
+				temp[k++] = arr[i++];
 			} else {
-				sorted[k++] = list[j++];
+				temp[k++] = arr[j++];
 			}
 		}
 
-		int l;
-		if (i > m) {
-			for (l = j; l <= r; l++) {
-				sorted[k++] = list[l];
+		if (j > e) {
+			for (int l = i; l <= mid; l++) {
+				temp[k++] = arr[l];
 			}
-		} else {
-			for (l = i; l <= m; l++) {
-				sorted[k++] = list[l];
+		} 
+		
+		if (i > mid) {
+			for (int l = j; l <= e; l++) {
+				temp[k++] = arr[l];
 			}
 		}
 
-		for (l = left; l <= r; l++) {
-			list[l] = sorted[l];
-		}
-		
-		
-		
-
-	}
-
-	public void mergeSort(int left, int right) {
-		int mid;
-
-		if (left < right) {
-			mid = (left + right) / 2;
-
-			mergeSort(left, mid);
-			mergeSort(mid + 1, right);
-			merge(left, right);
+		for (int l = s; l <= e; l++) {
+			arr[l] = temp[l];
 		}
 
 	}
 
-	public void run() {
-		Scanner scan = new Scanner(System.in);
-
-		int n = scan.nextInt();
-		list = new int[n];
-		sorted = new int[n];
-
-		for (int i = 0; i < n; i++) {
-			list[i] = scan.nextInt();
+	public void divide(int s, int e) {
+		if (s < e) {
+			int mid = (s + e) / 2;
+			divide(s, mid);
+			divide(mid + 1, e);
+			sort(s, mid, e);
 		}
-
-		mergeSort(0, n - 1);
-
-		for(int i = 0; i < n; i++) {
-			System.out.println(list[i]);
-		}
-		
 	}
 
 	public static void main(String[] args) {
-		new Main().run();
+		Main mergeSort = new Main();
+		mergeSort.divide(0, mergeSort.arr.length - 1);
+		System.out.print(Arrays.toString(mergeSort.arr));
 	}
-
 }
