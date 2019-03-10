@@ -1,69 +1,68 @@
 package com.study.sort.heap;
 
-public class Main {
-	private int index;
-	private int heap[];
+class Heap {
+	int index;
+	int n;
+	int arr[];
 
-	public Main(int N) {
-		index = 0;
-		this.heap = new int[N + 1];
+	public Heap(int n) {
+		this.n = n;
+		this.arr = new int[n + 1];
+		this.index = 0;
 	}
 
-	private void swap(int i, int j) {
-		int temp = heap[i];
-		heap[i] = heap[j];
-		heap[j] = temp;
+	public void swap(int a, int b) {
+		int temp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = temp;
 	}
 
-	public void insert(int a) {
+	public void insert(int k) {
 		int i = ++index;
-		heap[i] = a;
+		arr[i] = k;
 
-		while (i != 1 && heap[i] < heap[i / 2]) {
+		while (i > 1 && arr[i] < arr[i / 2]) {
 			swap(i, i / 2);
 			i = i / 2;
 		}
 	}
 
 	public int delete() {
-		int result = heap[1];
-		heap[1] = heap[index];
-		heap[index] = 0;
+		int rs = arr[1];
+		arr[1] = arr[index];
+		arr[index] = 0;
 		index--;
 
-		int i = 1;
-		int c = i;
-		while (c < index) {
-
-			c = i * 2;
-			
-			if (c < index && heap[c] > heap[c + 1]) {
-				c++;
+		int parent = 1;
+		int child = parent;
+		while (child < index) {
+			child = parent * 2;
+			if (child < index && arr[child + 1] < arr[child]) {
+				child = child + 1;
 			}
 
-			if (c <= index && heap[i] > heap[c]) {
-				swap(i, c);
-				i = c;
+			if (child <= index && arr[child] < arr[parent]) {
+				swap(parent, child);
+				parent = child;
 			} else {
 				break;
 			}
-			
-			
-
 		}
-		return result;
+
+		return rs;
 	}
+}
 
+public class Main {
 	public static void main(String[] args) {
-		int N = 100;
-		Main M = new Main(N);
-
-		for (int i = 0; i < N; i++) {
-			M.insert((int) (Math.random() * N));
+		int n = 100;
+		Heap h = new Heap(n);
+		for (int i = 0; i < n; i++) {
+			h.insert((int) (Math.random() * n) + 1);
 		}
 
-		for (int i = 0; i < N; i++) {
-			System.out.print(M.delete() + " ");
+		for (int i = 0; i < n; i++) {
+			System.out.println(h.delete());
 		}
 
 	}
