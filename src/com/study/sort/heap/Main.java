@@ -21,7 +21,7 @@ class Heap {
 		int i = ++index;
 		arr[i] = k;
 
-		while (i > 1 && arr[i] < arr[i / 2]) {
+		while (i > 1 && arr[i] > arr[i / 2]) {
 			swap(i, i / 2);
 			i = i / 2;
 		}
@@ -37,11 +37,11 @@ class Heap {
 		int child = parent;
 		while (child < index) {
 			child = parent * 2;
-			if (child < index && arr[child + 1] < arr[child]) {
+			if (child < index && arr[child + 1] > arr[child]) {
 				child = child + 1;
 			}
 
-			if (child <= index && arr[child] < arr[parent]) {
+			if (child <= index && arr[child] > arr[parent]) {
 				swap(parent, child);
 				parent = child;
 			} else {
